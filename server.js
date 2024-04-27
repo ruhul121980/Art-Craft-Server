@@ -38,6 +38,11 @@ async function run() {
     const craft = craftCollection.collection("craft");
     
 
+    app.get('/addCraft',async(req,res)=>{
+      const cursor=craft.find();
+      const result=await cursor.toArray();
+      res.send(result)
+    })
 
 
     app.post('/addCraft',async(req,res)=>{
