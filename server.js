@@ -3,7 +3,7 @@ const cors=require('cors');
 require('dotenv').config()
 const app=express();
 const port=process.env.port || 5000;
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
 // craftDB
 // 7FbQXeDHOfQHO4zb
@@ -44,17 +44,17 @@ async function run() {
       res.send(result)
     })
 
-  //   app.get('/myAddCraft/:email', async (req, res) => {
-  //     try {
-  //         const email = req.params.email;
-  //         const query = { userEmail: email };
-  //         const result = await Craft.find(query).toArray();
-  //         res.send(result);
-  //     } catch (error) {
-  //         console.error('Error fetching craft items:', error);
-  //         res.status(500).send({ error: 'An error occurred while fetching craft items' });
-  //     }
-  // });
+    app.get('/addCraft/:id', async (req, res) => {
+      try {
+          const id = req.params.id;
+          const query = {_id: new ObjectId(id) };
+          const result = await craft.findOne(query);
+          res.send(result);
+      } catch (error) {
+          console.error('Error fetching craft items:', error);
+          res.status(500).send({ error: 'An error occurred while fetching craft items' });
+      }
+  });
     
 
 
@@ -64,6 +64,39 @@ async function run() {
         const result = await craft.insertOne(newAddCraft);
         res.send(result);
         
+    })
+
+    app.delete('/addCraft/:id',async(req,res)=>{
+      const id=req.params.id;
+      console.log("delete",id);
+      const query={_id:new ObjectId(id)}
+      const result=await craft.deleteOne(query)
+      res.send(result)
+    }
+  )
+
+    app.put('/addCraft/:id',async(req,res)=>{
+      const id=req.params.id;
+      const user=req.body;
+      console.log(user)
+      const filter={_id:new ObjectId(id)}
+      const options={upsert:true}
+      const updatedUser={
+        $set:{
+          image:user.image,
+          itemName:user.itemName,
+          subcategoryName:user.subcategoryName,
+          shortDescription:user.shortDescription,
+          price:user.price,
+          rating:user.rating,
+          customization:user.customization,
+          processingTime:user.processingTime,
+          stockStatus:user.stockStatus
+         
+        }
+      }
+      const result=await craft.updateOne(filter,updatedUser,options)
+      res.send(result)
     })
 
 
