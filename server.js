@@ -44,6 +44,19 @@ async function run() {
       res.send(result)
     })
 
+  //   app.get('/myAddCraft/:email', async (req, res) => {
+  //     try {
+  //         const email = req.params.email;
+  //         const query = { userEmail: email };
+  //         const result = await Craft.find(query).toArray();
+  //         res.send(result);
+  //     } catch (error) {
+  //         console.error('Error fetching craft items:', error);
+  //         res.status(500).send({ error: 'An error occurred while fetching craft items' });
+  //     }
+  // });
+    
+
 
     app.post('/addCraft',async(req,res)=>{
         const newAddCraft=req.body;
