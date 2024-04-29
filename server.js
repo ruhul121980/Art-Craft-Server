@@ -44,6 +44,26 @@ async function run() {
       res.send(result)
     })
 
+    // app.get('/showCraft',async(req,res)=>{
+    //   const cursor=craftCategory.find();
+    //   const result=await cursor.toArray();
+    //   res.send(result)
+    // })
+
+
+    app.get('/showCraft', async (req, res) => {
+      try {
+          const craftCategoryCollection = client.db("craftDB").collection("craftCategory");
+          const cursor = craftCategoryCollection.find();
+          const result = await cursor.toArray();
+          res.send(result);
+      } catch (error) {
+          console.error('Error fetching craft items:', error);
+          res.status(500).send({ error: 'An error occurred while fetching craft items' });
+      }
+  });
+
+
     app.get('/addCraft/:id', async (req, res) => {
       try {
           const id = req.params.id;
