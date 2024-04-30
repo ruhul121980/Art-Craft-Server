@@ -5,18 +5,8 @@ const app=express();
 const port=process.env.port || 5000;
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
-// craftDB
-// 7FbQXeDHOfQHO4zb
-
-// middleware
 app.use(cors());
 app.use(express.json())
-
-
-
-
-
-
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.v1zto12.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
@@ -44,12 +34,7 @@ async function run() {
       res.send(result)
     })
 
-    // app.get('/showCraft',async(req,res)=>{
-    //   const cursor=craftCategory.find();
-    //   const result=await cursor.toArray();
-    //   res.send(result)
-    // })
-
+   
 
     app.get('/showCraft', async (req, res) => {
       try {
